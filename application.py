@@ -89,7 +89,7 @@ def index():
     cash = usd(cash_sql[0]['cash'])
 
     # Query user's stock information
-    stocks = db.execute("SELECT symbol, name, SUM(shares) FROM portfolio WHERE user_id = ? GROUP BY symbol", session["user_id"])
+    stocks = db.execute("SELECT symbol, name, SUM(shares) FROM portfolio WHERE user_id = ? GROUP BY symbol, name", session["user_id"])
 
     # Set stock subtotal to $0
     subtotal = 0.0
