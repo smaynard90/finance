@@ -24,7 +24,7 @@
         </tfoot>
         <tbody>
             {% for stock in stocks %}
-                {% if stock["SUM(shares)"] > 0 %}            
+                {% if stock["sum"] > 0 %}            
                     <tr>
                         <td>{{ stock["symbol"] }}</td>
                         <td>{{ stock["name"] }}</td>
