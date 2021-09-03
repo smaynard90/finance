@@ -287,7 +287,7 @@ def sell():
     float_balance = float(balance[0]['cash'])
 
     # Query user's stock information
-    stocks = db.execute("SELECT symbol, name, SUM(shares) FROM portfolio WHERE user_id = ? GROUP BY symbol", session["user_id"])
+    stocks = db.execute("SELECT symbol, name, SUM(shares) FROM portfolio WHERE user_id = ? GROUP BY symbol, name", session["user_id"])
 
     # Adds stocks' market prices to user's stock array
     for stock in stocks:
@@ -299,7 +299,7 @@ def sell():
         stock["price"] = (usd(quote["price"]))
 
         # Calculates total value of shares, formatted as USD
-        stock["total"] = usd((float(stock["SUM(shares)"])) * quote["price"])
+        stock["total"] = usd((float(stock["sum"])) * quote["price"])
 
     # Sends user to sell.html if they click "Sell" in the header
     if request.method == "GET":
@@ -339,7 +339,7 @@ def sell():
             for stock in stocks:
                 if symbol == stock['symbol']:
                     contains = True
-                    sum_shares = stock['SUM(shares)']
+                    sum_shares = stock['sum']
             if not contains:
                 return apology("Symbol doesn't exist")
             elif contains:
