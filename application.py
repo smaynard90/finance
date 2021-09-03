@@ -67,10 +67,10 @@ def index():
         stock["price"] = (usd(quote["price"]))
 
         # Calculates total value of shares, formatted as USD
-        stock["total"] = usd(((float(stock["SUM(shares)"])) * quote["price"]))
+        stock["total"] = usd(((float(stock["sum"])) * quote["price"]))
 
         # Calculates total value of stocks
-        subtotal += ((float(stock["SUM(shares)"])) * quote["price"])
+        subtotal += ((float(stock["sum"])) * quote["price"])
 
     # Calculates grand total, formatted as USD
     grand_total = usd(cash_sql[0]['cash'] + subtotal)
