@@ -10,7 +10,7 @@
             <select class="form-control" name="symbol">
                 <option disabled selected value="">Symbol</option>
                     {% for stock in stocks %}
-                        {% if stock["SUM(shares)"] > 0 %} 
+                        {% if stock["sum"] > 0 %} 
                 
                             <option value="{{ stock["symbol"] }}">{{ stock["symbol"] }}</option>
                     
