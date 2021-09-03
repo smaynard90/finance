@@ -13,17 +13,6 @@ import datetime
 
 from helpers import apology, login_required, lookup, usd
 
-# Configure for PostgreSQL
-urllib.parse.uses_netloc.append("postgres")
-url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
-conn = psycopg2.connect(
- database=url.path[1:],
- user=url.username,
- password=url.password,
- host=url.hostname,
- port=url.port
-)
-
 # Configure application
 app = Flask(__name__)
 
@@ -48,32 +37,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQL database
-db = SQL(os.environ["DATABASE_URL"])
-
-class SQL(object):
-    def __init__(self, url):
-        try:
-            self.engine = sqlalchemy.create_engine(url)
-        except Exception as e:
-            raise RuntimeError(e)
-    def execute(self, text, *multiparams, **params):
-        try:
-            statement = sqlalchemy.text(text).bindparams(*multiparams, **params)
-            result = self.engine.execute(str(statement.compile(compile_kwargs={"literal_binds": True})))
-            # SELECT
-            if result.returns_rows:
-                rows = result.fetchall()
-                return [dict(row) for row in rows]
-            # INSERT
-            elif result.lastrowid is not None:
-                return result.lastrowid
-            # DELETE, UPDATE
-            else:
-                return result.rowcount
-        except sqlalchemy.exc.IntegrityError:
-            return None
-        except Exception as e:
-            raise RuntimeError(e)
+db = SQL(os.getenv("DATABASE_URL"))
 
 # Make sure API key is set
 if not os.environ.get("API_KEY"):
